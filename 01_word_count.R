@@ -35,4 +35,4 @@ wordcloud(words = word_count$word,
 
 # Save the word count -----------------------------------------------------
 
-saveRDS(word_count, 'files/01_word_count.rds')
+saveRDS(word_count, 'files/word_count.rds')
