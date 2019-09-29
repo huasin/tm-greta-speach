@@ -15,8 +15,15 @@ word_count <- spech %>%
   unnest_tokens(word, text) %>% 
   anti_join(stop_words) %>% 
   count(word) %>% 
-  arrange(desc(n)) %>% 
   filter(str_detect(word, '[:alpha:]'))
+  
+#Lematizacion
+word_count <- word_count %>% 
+  left_join(lexicon::hash_lemmas, by = c('word' = 'token')) %>% 
+  mutate(word = ifelse(is.na(lemma), word, lemma)) %>%
+  group_by(word) %>% 
+  summarise(n = sum(n)) %>% 
+  arrange(desc(n))
 
 
 # Word cloud --------------------------------------------------------------
@@ -30,7 +37,7 @@ wordcloud(words = word_count$word,
           rot.per = .2,
           fixed.asp = T,
           colors = brewer.pal(4, "Set2"),
-          scale = c(3, .1))
+          scale = c(3.5, .1))
 
 
 # Save the word count -----------------------------------------------------
