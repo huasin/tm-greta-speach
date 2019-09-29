@@ -24,4 +24,5 @@ speach <- parag[3:16] %>%
 
 # Save the data -----------------------------------------------------------
 
+speach <- tibble(text = speach)
 speach %>% saveRDS('files/00_speach_greta.rds')
